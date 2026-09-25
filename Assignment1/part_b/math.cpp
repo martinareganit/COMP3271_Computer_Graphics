@@ -215,25 +215,80 @@ Quat QuatMultiply(const Quat &lhs, const Quat &rhs) {
 
 Quat QuatNormalize(const Quat &quat) {
     // ===== STUDENT_TASK_BEGIN: part_b_quat_normalize =====
-    return Quat{};
+   
+    //Calculate the length of the quaternion and divide by the length to normalize it then return if not zero.
+    const float length = std::sqrt(quat.w * quat.w + quat.x * quat.x + quat.y * quat.y + quat.z * quat.z);
+
+    if (length < 1.0e-8F) {
+        Quat backup;
+        backup.w = 1.0F; backup.x = 0.0F; backup.y = 0.0F; backup.z = 0.0F;
+        return backup;
+    }
+
+    Quat result;
+    result.w = quat.w / length;
+    result.x = quat.x / length;
+    result.y = quat.y / length;
+    result.z = quat.z / length;
+
+    return result;
     // ===== STUDENT_TASK_END: part_b_quat_normalize =====
 }
 
 Mat4 MakeRotationMatrix(const Quat &quat) {
     // ===== STUDENT_TASK_BEGIN: part_b_quat_to_matrix =====
-    return Mat4{};
+    
+    //Calculate the values and return the result using the quaternion to rotation matrix formula.
+    const float w = quat.w, x = quat.x, y = quat.y, z = quat.z;
+
+    Mat4 result;
+    result.at(0, 0) = 1.0F - 2.0F * (y * y + z * z);
+    result.at(0, 1) = 2.0F * (x * y - w * z);
+    result.at(0, 2) = 2.0F * (x * z + w * y);
+    result.at(0, 3) = 0.0F;
+
+    result.at(1, 0) = 2.0F * (x * y + w * z);
+    result.at(1, 1) = 1.0F - 2.0F * (x * x + z * z);
+    result.at(1, 2) = 2.0F * (y * z - w * x);
+    result.at(1, 3) = 0.0F;
+
+    result.at(2, 0) = 2.0F * (x * z - w * y);
+    result.at(2, 1) = 2.0F * (y * z + w * x);
+    result.at(2, 2) = 1.0F - 2.0F * (x * x + y * y);
+    result.at(2, 3) = 0.0F;
+
+    result.at(3, 0) = 0.0F;
+    result.at(3, 1) = 0.0F;
+    result.at(3, 2) = 0.0F;
+    result.at(3, 3) = 1.0F;
+
+    return result;
     // ===== STUDENT_TASK_END: part_b_quat_to_matrix =====
 }
 
 Mat4 ComposeModelMatrixEuler(const Transform &transform) {
     // ===== STUDENT_TASK_BEGIN: part_b_compose_model_matrix_euler =====
-    return Mat4{};
+    
+    //Compose a model matrix using the translation, rotation, and scale T, Rz, Ry, Rx, and S.
+    Mat4 T = MakeTranslationMatrix(transform.translation);
+    Mat4 Rx = MakeRotationXMatrix(Radians(transform.rotation_degrees.x));
+    Mat4 Ry = MakeRotationYMatrix(Radians(transform.rotation_degrees.y));
+    Mat4 Rz = MakeRotationZMatrix(Radians(transform.rotation_degrees.z));
+    Mat4 S = MakeScaleMatrix(transform.scale);
+
+    return T * Rz * Ry * Rx * S;
     // ===== STUDENT_TASK_END: part_b_compose_model_matrix_euler =====
 }
 
 Mat4 ComposeModelMatrixQuat(const Vec3 &translation, const Quat &rotation, const Vec3 &scale) {
     // ===== STUDENT_TASK_BEGIN: part_b_compose_model_matrix_quat =====
-    return Mat4{};
+    
+    //Compose a model matrix using the translation, rotation, and scale T, R, and S.
+    Mat4 T = MakeTranslationMatrix(translation);
+    Mat4 R = MakeRotationMatrix(rotation);
+    Mat4 S = MakeScaleMatrix(scale);
+
+    return T * R * S;
     // ===== STUDENT_TASK_END: part_b_compose_model_matrix_quat =====
 }
 
