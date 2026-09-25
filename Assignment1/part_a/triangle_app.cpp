@@ -62,6 +62,7 @@ void DrawTriangles() {
     }
     glEnd();
 
+    glColor3d(1.0, 1.0, 1.0);
     glBegin(GL_POINTS);
     i = 0;
     while (i < point_count) {
