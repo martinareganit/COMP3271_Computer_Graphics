@@ -46,9 +46,7 @@ void DrawTriangles() {
 
     glColor3d(1.0, 1.0, 1.0);
     glPointSize(5.0F);
-    
     // ===== STUDENT_TASK_BEGIN: part_a_draw_triangles =====
-    
     glBegin(GL_TRIANGLES);
     int i = 0;
     while (i < triangles.size()) {
@@ -70,14 +68,11 @@ void DrawTriangles() {
         i++;
     }
     glEnd();
-
     // ===== STUDENT_TASK_END: part_a_draw_triangles =====
 }
 
 void MouseInteraction(double m_x, double m_y) {
-    
     // ===== STUDENT_TASK_BEGIN: part_a_mouse_interaction =====
-    
     triangle_to_draw.vertices[point_count][0] = m_x;
     triangle_to_draw.vertices[point_count][1] = m_y;
     point_count++;
@@ -90,6 +85,5 @@ void MouseInteraction(double m_x, double m_y) {
         triangles.push_back(triangle_to_draw);
         point_count = 0;
     }
-
     // ===== STUDENT_TASK_END: part_a_mouse_interaction =====
 }

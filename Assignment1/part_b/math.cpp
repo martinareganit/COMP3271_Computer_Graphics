@@ -90,37 +90,95 @@ Vec3 TransformPoint(const Mat4 &matrix, const Vec3 &point) {
 
 Mat4 MakeTranslationMatrix(const Vec3 &translation) {
     // ===== STUDENT_TASK_BEGIN: part_b_translation_matrix =====
-    return Mat4{};
+    
+    //Build a translation matrix row by row, where the last column is the vector and the diagonal is 1.0F.
+    Mat4 result;
+    result.at(0, 0) = 1.0F; result.at(0, 1) = 0.0F; result.at(0, 2) = 0.0F; result.at(0, 3) = translation.x;
+    result.at(1, 0) = 0.0F; result.at(1, 1) = 1.0F; result.at(1, 2) = 0.0F; result.at(1, 3) = translation.y;
+    result.at(2, 0) = 0.0F; result.at(2, 1) = 0.0F; result.at(2, 2) = 1.0F; result.at(2, 3) = translation.z;
+    result.at(3, 0) = 0.0F; result.at(3, 1) = 0.0F; result.at(3, 2) = 0.0F; result.at(3, 3) = 1.0F;
+
+    return result;
     // ===== STUDENT_TASK_END: part_b_translation_matrix =====
 }
 
 Mat4 MakeRotationXMatrix(float radians) {
     // ===== STUDENT_TASK_BEGIN: part_b_rotation_x_matrix =====
-    return Mat4{};
+
+    //Build a rotation matrix row by row, where the x axis is fixed while the y and z plane uses cosine with sine.
+    const float c = std::cos(radians);
+    const float s = std::sin(radians);
+    
+    Mat4 result;
+    result.at(0, 0) = 1.0F; result.at(0, 1) = 0.0F; result.at(0, 2) = 0.0F; result.at(0, 3) = 0.0F;
+    result.at(1, 0) = 0.0F; result.at(1, 1) = c; result.at(1, 2) = -s; result.at(1, 3) = 0.0F;
+    result.at(2, 0) = 0.0F; result.at(2, 1) = s; result.at(2, 2) = c; result.at(2, 3) = 0.0F;
+    result.at(3, 0) = 0.0F; result.at(3, 1) = 0.0F; result.at(3, 2) = 0.0F; result.at(3, 3) = 1.0F;
+    
+    return result;
     // ===== STUDENT_TASK_END: part_b_rotation_x_matrix =====
 }
 
 Mat4 MakeRotationYMatrix(float radians) {
     // ===== STUDENT_TASK_BEGIN: part_b_rotation_y_matrix =====
-    return Mat4{};
+    
+    //Build a rotation matrix row by row, where the y axis is fixed while the x and z plane uses cosine with sine.
+    const float c = std::cos(radians);
+    const float s = std::sin(radians);
+
+    Mat4 result;
+    result.at(0, 0) = c; result.at(0, 1) = 0.0F; result.at(0, 2) = s; result.at(0, 3) = 0.0F;
+    result.at(1, 0) = 0.0F; result.at(1, 1) = 1.0F; result.at(1, 2) = 0.0F; result.at(1, 3) = 0.0F;
+    result.at(2, 0) = -s; result.at(2, 1) = 0.0F; result.at(2, 2) = c; result.at(2, 3) = 0.0F;
+    result.at(3, 0) = 0.0F; result.at(3, 1) = 0.0F; result.at(3, 2) = 0.0F; result.at(3, 3) = 1.0F;
+
+    return result;
     // ===== STUDENT_TASK_END: part_b_rotation_y_matrix =====
 }
 
 Mat4 MakeRotationZMatrix(float radians) {
     // ===== STUDENT_TASK_BEGIN: part_b_rotation_z_matrix =====
-    return Mat4{};
+   
+    //Build a rotation matrix row by row, where the z axis is fixed while the x and y plane uses cosine with sine.
+    const float c = std::cos(radians);
+    const float s = std::sin(radians);
+
+    Mat4 result;
+    result.at(0, 0) = c; result.at(0, 1) = -s; result.at(0, 2) = 0.0F; result.at(0, 3) = 0.0F;
+    result.at(1, 0) = s; result.at(1, 1) = c; result.at(1, 2) = 0.0F; result.at(1, 3) = 0.0F;
+    result.at(2, 0) = 0.0F; result.at(2, 1) = 0.0F; result.at(2, 2) = 1.0F; result.at(2, 3) = 0.0F;
+    result.at(3, 0) = 0.0F; result.at(3, 1) = 0.0F; result.at(3, 2) = 0.0F; result.at(3, 3) = 1.0F;
+
+    return result;
     // ===== STUDENT_TASK_END: part_b_rotation_z_matrix =====
 }
 
 Mat4 MakeScaleMatrix(const Vec3 &scale) {
     // ===== STUDENT_TASK_BEGIN: part_b_scale_matrix =====
-    return Mat4{};
+   
+    //Build a scale matrix row by row, where the diagonal is the scale vector and the last column is 0.0F other than the last row which is 1.0F.
+    Mat4 result;
+    result.at(0, 0) = scale.x; result.at(0, 1) = 0.0F; result.at(0, 2) = 0.0F; result.at(0, 3) = 0.0F;
+    result.at(1, 0) = 0.0F; result.at(1, 1) = scale.y; result.at(1, 2) = 0.0F; result.at(1, 3) = 0.0F;
+    result.at(2, 0) = 0.0F; result.at(2, 1) = 0.0F; result.at(2, 2) = scale.z; result.at(2, 3) = 0.0F;
+    result.at(3, 0) = 0.0F; result.at(3, 1) = 0.0F; result.at(3, 2) = 0.0F; result.at(3, 3) = 1.0F;
+
+    return result;
     // ===== STUDENT_TASK_END: part_b_scale_matrix =====
 }
 
 Quat EulerToQuat(const Vec3 &rotation_degrees) {
     // ===== STUDENT_TASK_BEGIN: part_b_euler_to_quat =====
-    return Quat{};
+    
+    //Multiply quaternions for the z, y, and x axis then normalize the result that representsthe eular angles.
+    Quat q_x = MakeAxisAngleQuat({1.0F, 0.0F, 0.0F}, rotation_degrees.x);
+    Quat q_y = MakeAxisAngleQuat({0.0F, 1.0F, 0.0F}, rotation_degrees.y);
+    Quat q_z = MakeAxisAngleQuat({0.0F, 0.0F, 1.0F}, rotation_degrees.z);
+
+    Quat q_zy = QuatMultiply(q_z, q_y);
+    Quat q_xyz = QuatMultiply(q_zy, q_x);
+
+    return QuatNormalize(q_xyz);
     // ===== STUDENT_TASK_END: part_b_euler_to_quat =====
 }
 
@@ -140,7 +198,18 @@ Quat MakeAxisAngleQuat(const Vec3 &axis, float degrees) {
 
 Quat QuatMultiply(const Quat &lhs, const Quat &rhs) {
     // ===== STUDENT_TASK_BEGIN: part_b_quat_multiply =====
-    return Quat{};
+    
+    //Multiply two quaternions component by component using the Hamilton product formula.
+    const float w1 = lhs.w, x1 = lhs.x, y1 = lhs.y, z1 = lhs.z;
+    const float w2 = rhs.w, x2 = rhs.x, y2 = rhs.y, z2 = rhs.z;
+
+    Quat result;
+    result.w = (w1 * w2) - (x1 * x2 + y1 * y2 + z1 * z2);
+    result.x = (w1 * x2) + (w2 * x1) + (y1 * z2 - z1 * y2);
+    result.y = (w1 * y2) + (w2 * y1) + (z1 * x2 - x1 * z2);
+    result.z = (w1 * z2) + (w2 * z1) + (x1 * y2 - y1 * x2);
+
+    return result;
     // ===== STUDENT_TASK_END: part_b_quat_multiply =====
 }
 
@@ -165,7 +234,7 @@ Mat4 ComposeModelMatrixEuler(const Transform &transform) {
 Mat4 ComposeModelMatrixQuat(const Vec3 &translation, const Quat &rotation, const Vec3 &scale) {
     // ===== STUDENT_TASK_BEGIN: part_b_compose_model_matrix_quat =====
     return Mat4{};
-    // ===== STUDENT_TASK_BEGIN: part_b_compose_model_matrix_quat =====
+    // ===== STUDENT_TASK_END: part_b_compose_model_matrix_quat =====
 }
 
 Mat4 MakePerspective(float vertical_fov_radians, float aspect, float near_plane, float far_plane) {
