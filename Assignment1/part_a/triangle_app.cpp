@@ -50,20 +50,23 @@ void DrawTriangles() {
     // ===== STUDENT_TASK_BEGIN: part_a_draw_triangles =====
     
     glBegin(GL_TRIANGLES);
-    for (int i = 0; i < triangles.size(); i++) {
+    int i = 0;
+    while (i < triangles.size()) {
         int color_idx = triangles[i].color_index;
         glColor3d(color_array[color_idx][0], color_array[color_idx][1], color_array[color_idx][2]);
 
         glVertex2d(triangles[i].vertices[0][0], triangles[i].vertices[0][1]);
         glVertex2d(triangles[i].vertices[1][0], triangles[i].vertices[1][1]);
         glVertex2d(triangles[i].vertices[2][0], triangles[i].vertices[2][1]);
+        i++;
     }
     glEnd();
 
-    glColor3d(1.0, 1.0, 1.0);
     glBegin(GL_POINTS);
-    for (int i = 0; i < point_count; i++) {
+    i = 0;
+    while (i < point_count) {
         glVertex2d(triangle_to_draw.vertices[i][0], triangle_to_draw.vertices[i][1]);
+        i++;
     }
     glEnd();
 
@@ -84,7 +87,6 @@ void MouseInteraction(double m_x, double m_y) {
 
         triangle_to_draw.color_index = total_triangles % total_colors;
         triangles.push_back(triangle_to_draw);
-
         point_count = 0;
     }
 
