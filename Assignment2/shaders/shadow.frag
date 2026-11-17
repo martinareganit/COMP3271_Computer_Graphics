@@ -16,6 +16,23 @@ out vec4 fragment_color;
 
 float shadow_visibility(vec4 light_clip) {
     // ===== STUDENT_TASK_BEGIN: assignment2_shadow_visibility =====
+    if (light_clip.w <= 0.0) {
+    return 1.0;
+    }
+    vec3 n_coordinates = light_clip.xyz / light_clip.w;
+
+    vec3 p_coordinates = n_coordinates * 0.5 + 0.5;
+
+    vec3 c_coordinates = clamp(p_coordinates, 0.0, 1.0);
+    if (p_coordinates != c_coordinates) {
+        return 1.0;
+    }
+    float closest_depth = texture(u_shadow_map, p_coordinates.xy).r;
+    float current_depth = p_coordinates.z - u_shadow_bias;
+
+    if (current_depth > closest_depth) {
+        return 0.0;
+    }
     return 1.0;
     // ===== STUDENT_TASK_END: assignment2_shadow_visibility =====
 }

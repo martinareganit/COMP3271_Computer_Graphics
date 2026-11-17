@@ -12,8 +12,12 @@ out vec3 v_world_normal;
 
 void main() {
     // ===== STUDENT_TASK_BEGIN: assignment2_blinn_phong_vertex_shader =====
-    gl_Position = vec4(0.0);
-    v_world_position = vec3(0.0);
-    v_world_normal = vec3(0.0);
+    vec4 w_position = u_model * vec4(a_position, 1.0);
+    gl_Position = u_projection * u_view * w_position;
+
+    v_world_position = vec3(w_position);
+
+    mat3 n_matrix = mat3(transpose(inverse(u_model)));
+    v_world_normal = normalize(n_matrix * a_normal);
     // ===== STUDENT_TASK_END: assignment2_blinn_phong_vertex_shader =====
 }
